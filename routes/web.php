@@ -6,7 +6,7 @@ use App\Http\Controllers\TodoController;
 
 // Page d'accueil et liste des tâches
 Route::get('/', [TodoController::class, 'index'])->name('todos.index');
-Route::get('/todos', [TodoController::class, 'index']); // pas besoin de nom ici si / suffit
+Route::get('/todos', [TodoController::class, 'index']);
 
 // Création de tâche
 Route::get('/todos/create', [TodoController::class, 'create'])->name('todos.create');
@@ -22,5 +22,19 @@ Route::delete('/todos/{todo}', [TodoController::class, 'destroy'])->name('todos.
 // Basculement terminé <=> en cours
 Route::put('/todos/{todo}/toggle', [TodoController::class, 'toggle'])->name('todos.toggle');
 
+// Routes pour les invités (non connectés)
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+    Route::post('/register', [AuthController::class, 'register']);
+});
+
+// Routes pour les utilisateurs connectés
+Route::middleware('auth')->group(function () {
+    Route::get('/', [TaskController::class, 'index'])->name('tasks.index');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    
+});
 
 

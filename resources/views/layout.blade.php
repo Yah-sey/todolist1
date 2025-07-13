@@ -18,7 +18,13 @@
     <div class="container mt-4">
         @yield('content')
     </div>
-
+    <div class="header">
+    <h1>Liste des tâches</h1>
+    <form method="POST" action="{{ route('logout') }}" style="display: inline;">
+        @csrf
+        <button type="submit" class="btn btn-secondary">Déconnexion</button>
+    </form>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
